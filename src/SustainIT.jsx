@@ -419,7 +419,7 @@ export default function App() {
     <div style={styles.app}>
       <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
       <div style={styles.phone}>
-        <div style={styles.statusBar}><span>9:41</span><span>100%</span></div>
+        {/* Status bar removed */}
         <Splash onStart={() => setPage("setup")} />
       </div>
     </div>
@@ -429,7 +429,7 @@ export default function App() {
     <div style={styles.app}>
       <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
       <div style={styles.phone}>
-        <div style={styles.statusBar}><span>9:41</span><span>100%</span></div>
+        {/* Status bar removed */}
         <Setup onDone={() => setPage("main")} />
       </div>
     </div>
@@ -439,7 +439,7 @@ export default function App() {
     <div style={styles.app}>
       <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
       <div style={styles.phone}>
-        <div style={styles.statusBar}><span>9:41</span><span>100%</span></div>
+        {/* Status bar removed */}
         <LogToday onSave={() => setPage("saved")} />
       </div>
     </div>
@@ -449,7 +449,7 @@ export default function App() {
     <div style={styles.app}>
       <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
       <div style={styles.phone}>
-        <div style={styles.statusBar}><span>9:41</span><span>100%</span></div>
+        {/* Status bar removed */}
         <Saved onBack={() => setPage("main")} />
       </div>
     </div>
@@ -462,7 +462,7 @@ export default function App() {
     <div style={styles.app}>
       <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
       <div style={styles.phone}>
-        <div style={styles.statusBar}><span>9:41</span><span>100%</span></div>
+        {/* Status bar removed */}
         {screens[nav]}
         <div style={styles.navBar}>
           {NAV.map(({ id, icon, label }) => (
