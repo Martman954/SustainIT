@@ -137,6 +137,90 @@ const styles = {
 
 // ─── Screens ────────────────────────────────────────────────────────────────
 
+function TopBar({ title, onBack, actionLabel, onAction }) {
+  return (
+    <div style={{ display: "grid", gridTemplateColumns: "48px 1fr 48px", alignItems: "center", marginBottom: "16px" }}>
+      <button
+        type="button"
+        onClick={onBack}
+        aria-label="Back"
+        style={{
+          width: 38,
+          height: 38,
+          borderRadius: "12px",
+          border: "none",
+          background: "none",
+          color: theme.text,
+          fontSize: "22px",
+          cursor: "pointer",
+          justifySelf: "start",
+        }}
+      >
+        ←
+      </button>
+      <h1 style={{ margin: 0, textAlign: "center", fontSize: "30px", fontWeight: "700", letterSpacing: "-0.5px" }}>{title}</h1>
+      {actionLabel ? (
+        <button
+          type="button"
+          onClick={onAction}
+          style={{
+            border: "none",
+            background: "none",
+            color: theme.text,
+            fontSize: "16px",
+            cursor: "pointer",
+            justifySelf: "end",
+            padding: "6px 8px",
+          }}
+        >
+          {actionLabel}
+        </button>
+      ) : (
+        <div />
+      )}
+    </div>
+  );
+}
+
+function PressRow({ icon, title, subtitle, right, onClick }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      style={{
+        ...styles.card,
+        width: "100%",
+        display: "flex",
+        alignItems: "center",
+        gap: "14px",
+        textAlign: "left",
+        cursor: "pointer",
+        border: "none",
+      }}
+    >
+      {icon ? (
+        <div style={{ width: 44, height: 44, borderRadius: "50%", background: theme.surface2, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "22px", flexShrink: 0 }}>
+          {icon}
+        </div>
+      ) : null}
+      <div style={{ flex: 1 }}>
+        <p style={{ margin: 0, fontWeight: "600", fontSize: "16px" }}>{title}</p>
+        {subtitle ? <p style={{ margin: "4px 0 0", color: theme.textMuted, fontSize: "13px" }}>{subtitle}</p> : null}
+      </div>
+      <div style={{ color: theme.textDim, fontSize: "16px" }}>{right ?? "›"}</div>
+    </button>
+  );
+}
+
+function ProgressBar({ value, max = 1, color = theme.green }) {
+  const pct = Math.max(0, Math.min(1, max === 0 ? 0 : value / max)) * 100;
+  return (
+    <div style={{ height: "6px", background: theme.border, borderRadius: "3px" }}>
+      <div style={{ height: "100%", width: `${pct}%`, background: color, borderRadius: "3px" }} />
+    </div>
+  );
+}
+
 function Splash({ onStart }) {
   return (
     <div style={{ ...styles.screen, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "0" }}>
@@ -192,19 +276,35 @@ function Setup({ onDone }) {
   );
 }
 
-function Home({ onLog }) {
+function Home({ onLog, onImpactDetails }) {
   return (
     <div style={styles.screen}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
         <h1 style={{ fontSize: "28px", fontWeight: "700", margin: 0 }}>Home</h1>
         <div style={{ width: 38, height: 38, borderRadius: "50%", background: theme.surface, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }}>⚙️</div>
       </div>
+
       <div style={{ ...styles.card, textAlign: "center", marginBottom: "12px" }}>
         <p style={{ color: theme.textMuted, fontSize: "13px", margin: "0 0 4px" }}>This week</p>
         <p style={{ fontSize: "44px", fontWeight: "700", margin: "0", letterSpacing: "-1px" }}>2.3 kg</p>
-        <p style={{ color: theme.textMuted, margin: "4px 0 4px", fontSize: "14px" }}>CO₂ saved 🌱</p>
-        <p style={{ color: theme.textDim, fontSize: "12px", margin: 0 }}>Equivalent to 12 km driven</p>
+        <p style={{ color: theme.textMuted, margin: "4px 0 6px", fontSize: "14px" }}>CO₂ saved 🌱</p>
+        <button
+          type="button"
+          onClick={onImpactDetails}
+          style={{
+            border: "none",
+            background: "none",
+            color: theme.green,
+            fontWeight: "600",
+            fontSize: "13px",
+            cursor: "pointer",
+            padding: 0,
+          }}
+        >
+          View impact details
+        </button>
       </div>
+
       <div style={{ ...styles.card, display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
         <div>
           <p style={{ fontWeight: "600", margin: "0 0 4px" }}>Current streak</p>
@@ -364,7 +464,271 @@ function Tips() {
   );
 }
 
-function Profile() {
+function Achievements({ onBack }) {
+  const unlocked = [
+    { icon: "🔥", title: "Week Warrior", sub: "7-day logging streak", pts: "+50 pts" },
+    { icon: "🚲", title: "Bike Champion", sub: "Biked 10 times", pts: "+30 pts" },
+    { icon: "🌱", title: "First Steps", sub: "Completed first log", pts: "+10 pts" },
+  ];
+  const comingSoon = [
+    { icon: "🏆", title: "Month Master", sub: "30-day streak" },
+    { icon: "🥗", title: "Veggie Hero", sub: "20 veggie days" },
+  ];
+
+  return (
+    <div style={{ ...styles.screen, paddingBottom: "24px" }}>
+      <TopBar title="Achievements" onBack={onBack} />
+
+      <div style={{ ...styles.card, textAlign: "center", padding: "18px 16px" }}>
+        <p style={{ color: theme.textMuted, margin: "0 0 6px", fontSize: "14px" }}>Your eco points</p>
+        <p style={{ fontSize: "52px", fontWeight: "800", margin: "0 0 4px", letterSpacing: "-1px" }}>247</p>
+        <p style={{ color: theme.textMuted, margin: 0, fontSize: "14px" }}>Level 3 Eco Warrior</p>
+      </div>
+
+      <h2 style={{ fontSize: "26px", fontWeight: "700", margin: "18px 0 12px" }}>Unlocked</h2>
+      {unlocked.map((a) => (
+        <div key={a.title} style={{ ...styles.card, display: "flex", alignItems: "center", gap: "14px" }}>
+          <div style={{ width: 54, height: 54, borderRadius: "50%", background: "#f5f2ea", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "26px", flexShrink: 0 }}>
+            <span style={{ transform: "translateY(1px)" }}>{a.icon}</span>
+          </div>
+          <div style={{ flex: 1 }}>
+            <p style={{ margin: 0, fontWeight: "700", fontSize: "18px" }}>{a.title}</p>
+            <p style={{ margin: "2px 0 0", color: theme.textMuted, fontSize: "13px" }}>{a.sub}</p>
+          </div>
+          <div style={{ color: theme.textMuted, fontWeight: "600", fontSize: "14px" }}>{a.pts}</div>
+        </div>
+      ))}
+
+      <h2 style={{ fontSize: "26px", fontWeight: "700", margin: "18px 0 12px" }}>Coming soon</h2>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
+        {comingSoon.map((c) => (
+          <div key={c.title} style={{ ...styles.card, marginBottom: 0, opacity: 0.9 }}>
+            <div style={{ width: 52, height: 52, borderRadius: "16px", background: theme.surface2, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "26px", marginBottom: "10px" }}>
+              {c.icon}
+            </div>
+            <p style={{ margin: 0, fontWeight: "700", fontSize: "16px" }}>{c.title}</p>
+            <p style={{ margin: "4px 0 0", color: theme.textMuted, fontSize: "13px" }}>{c.sub}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function Community({ onBack }) {
+  const leaders = [
+    { rank: 1, name: "Emma Martinez", dept: "Environmental Science", kg: "4.8 kg" },
+    { rank: 2, name: "Lucas Kim", dept: "Engineering", kg: "3.6 kg" },
+    { rank: 3, name: "Sofia Andersen", dept: "Biology", kg: "2.9 kg" },
+  ];
+  const rankColors = ["#f2c35d", "#bfc2c7", "#e09b82"];
+
+  return (
+    <div style={{ ...styles.screen, paddingBottom: "24px" }}>
+      <TopBar title="Community" onBack={onBack} actionLabel="Invite" onAction={() => {}} />
+
+      <div style={{ ...styles.card, background: theme.greenLight, border: `1px solid ${theme.green}`, color: "#183125", padding: "18px 16px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
+          <div style={{ width: 56, height: 56, borderRadius: "50%", background: theme.green, color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: "800", fontSize: "18px" }}>
+            #4
+          </div>
+          <div style={{ flex: 1 }}>
+            <p style={{ margin: 0, fontSize: "14px", opacity: 0.85 }}>Your ranking this week</p>
+            <p style={{ margin: "6px 0 2px", fontSize: "34px", fontWeight: "800", letterSpacing: "-0.5px" }}>4th place</p>
+            <p style={{ margin: 0, fontSize: "16px", opacity: 0.85 }}>2.3 kg CO₂ saved</p>
+          </div>
+        </div>
+      </div>
+
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginTop: "14px" }}>
+        <h2 style={{ fontSize: "26px", fontWeight: "700", margin: 0 }}>Campus leaderboard</h2>
+        <p style={{ margin: 0, color: theme.textMuted, fontSize: "14px" }}>This week</p>
+      </div>
+
+      {leaders.map((l) => {
+        const initials = l.name.split(" ").slice(0, 2).map((s) => s[0]).join("");
+        return (
+          <div key={l.rank} style={{ ...styles.card, display: "flex", alignItems: "center", gap: "14px" }}>
+            <div style={{ width: 34, height: 34, borderRadius: "50%", background: rankColors[l.rank - 1] ?? theme.surface2, display: "flex", alignItems: "center", justifyContent: "center", color: "#111", fontWeight: "800" }}>
+              {l.rank}
+            </div>
+            <div style={{ width: 40, height: 40, borderRadius: "50%", background: "#dfe7f0", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: "700", color: "#587", flexShrink: 0 }}>
+              {initials}
+            </div>
+            <div style={{ flex: 1 }}>
+              <p style={{ margin: 0, fontWeight: "700", fontSize: "18px" }}>{l.name}</p>
+              <p style={{ margin: "2px 0 0", color: theme.textMuted, fontSize: "13px" }}>{l.dept}</p>
+            </div>
+            <div style={{ fontWeight: "700", fontSize: "18px" }}>{l.kg}</div>
+          </div>
+        );
+      })}
+
+      <div style={{ ...styles.card, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div>
+          <p style={{ margin: 0, fontWeight: "700", fontSize: "18px" }}>Campus average</p>
+          <p style={{ margin: "4px 0 0", color: theme.textMuted, fontSize: "13px" }}>Based on 247 active students</p>
+        </div>
+        <div style={{ fontWeight: "800", fontSize: "20px" }}>1.4 kg</div>
+      </div>
+
+      <div style={{ ...styles.card, background: theme.accent, color: "#3a3a3a", display: "flex", alignItems: "center", gap: "12px" }}>
+        <div style={{ width: 44, height: 44, borderRadius: "14px", background: "rgba(0,0,0,0.06)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "22px" }}>
+          🏆
+        </div>
+        <div>
+          <p style={{ margin: 0, fontWeight: "800", fontSize: "16px" }}>Weekly challenge</p>
+          <p style={{ margin: "4px 0 0", fontSize: "14px" }}>Bike 5 days to win 100 points</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function MonthReview({ onBack }) {
+  const weekDays = ["M", "T", "W", "T", "F", "S", "S"];
+  const statuses = [
+    "partial", "full", "full", "full", "full", "partial", "missed",
+    "full", "full", "partial", "full", "full", "missed", "partial",
+    "full", "full", "full", "full", "partial", "full", "full",
+    "full", "partial", "full", "missed", "full", "full", "full",
+    "full", "partial", "full",
+  ];
+  const statusColor = (s) => {
+    if (s === "full") return theme.green;
+    if (s === "partial") return "#a8c9ff";
+    return "#d7d1c6";
+  };
+
+  return (
+    <div style={{ ...styles.screen, paddingBottom: "24px" }}>
+      <TopBar title="March Review" onBack={onBack} actionLabel="Share" onAction={() => {}} />
+
+      <div style={{ ...styles.card, background: theme.greenLight, color: "#183125", padding: "18px 16px" }}>
+        <p style={{ margin: 0, fontWeight: "700", opacity: 0.8 }}>Incredible month!</p>
+        <p style={{ margin: "10px 0 6px", fontSize: "56px", fontWeight: "900", letterSpacing: "-1px", color: theme.green }}>12.8 kg</p>
+        <p style={{ margin: 0, opacity: 0.8, fontSize: "16px" }}>CO₂ saved in March</p>
+      </div>
+
+      <h2 style={{ fontSize: "26px", fontWeight: "700", margin: "18px 0 12px" }}>Your activity</h2>
+      <div style={{ ...styles.card, padding: "16px" }}>
+        <p style={{ margin: 0, color: theme.textMuted, fontSize: "14px" }}>March 2026</p>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: "8px", marginTop: "12px" }}>
+          {weekDays.map((d) => (
+            <div key={d} style={{ textAlign: "center", color: theme.textMuted, fontSize: "11px" }}>{d}</div>
+          ))}
+          {statuses.map((s, i) => (
+            <div key={i} style={{ width: "100%", paddingTop: "100%", borderRadius: "6px", background: statusColor(s) }} />
+          ))}
+        </div>
+        <div style={{ display: "flex", gap: "16px", alignItems: "center", justifyContent: "center", marginTop: "12px", color: theme.textMuted, fontSize: "12px" }}>
+          {[["Full day", theme.green], ["Partial", "#a8c9ff"], ["Missed", "#d7d1c6"]].map(([label, c]) => (
+            <div key={label} style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <span style={{ width: 10, height: 10, borderRadius: "3px", background: c, display: "inline-block" }} />
+              <span>{label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <h2 style={{ fontSize: "26px", fontWeight: "700", margin: "18px 0 12px" }}>Top habits</h2>
+      <div style={styles.card}>
+        {[
+          { icon: "🚲", title: "Biking", days: 18, color: theme.green },
+          { icon: "♻️", title: "Recycling", days: 23, color: theme.green },
+        ].map((h) => (
+          <div key={h.title} style={{ padding: "10px 0", borderBottom: `1px solid ${theme.border}` }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                <span style={{ fontSize: "18px" }}>{h.icon}</span>
+                <span style={{ fontWeight: "700" }}>{h.title}</span>
+              </div>
+              <span style={{ color: theme.textMuted, fontWeight: "700" }}>{h.days} days</span>
+            </div>
+            <ProgressBar value={h.days} max={31} color={h.color} />
+          </div>
+        ))}
+        <div style={{ height: 2 }} />
+      </div>
+
+      <h2 style={{ fontSize: "26px", fontWeight: "700", margin: "18px 0 12px" }}>Milestones unlocked</h2>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
+        {[
+          { icon: "🔥", title: "7-day streak", date: "March 15" },
+          { icon: "🏆", title: "10 kg saved", date: "March 28" },
+        ].map((m) => (
+          <div key={m.title} style={{ ...styles.card, marginBottom: 0 }}>
+            <p style={{ margin: 0, fontSize: "22px" }}>{m.icon}</p>
+            <p style={{ margin: "8px 0 2px", fontWeight: "800" }}>{m.title}</p>
+            <p style={{ margin: 0, color: theme.textMuted, fontSize: "13px" }}>{m.date}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ImpactDetails({ onBack }) {
+  const equivalents = [
+    { title: "Driving", value: "12 km", sub: "in a car" },
+    { title: "Charging", value: "280", sub: "smartphones" },
+    { title: "Powering", value: "2.3 hours", sub: "of TV" },
+    { title: "Growing", value: "0.1", sub: "tree seedlings" },
+  ];
+
+  const breakdown = [
+    { icon: "🚲", title: "Transport", sub: "Biked 4 days this week", kg: 1.2, color: theme.green },
+    { icon: "🥗", title: "Food", sub: "2 vegetarian days", kg: 0.8, color: "#f0a040" },
+  ];
+  const maxKg = Math.max(...breakdown.map((b) => b.kg));
+
+  return (
+    <div style={{ ...styles.screen, paddingBottom: "24px" }}>
+      <TopBar title="Impact details" onBack={onBack} />
+
+      <div style={{ ...styles.card, padding: "18px 16px" }}>
+        <p style={{ margin: 0, color: theme.textMuted, fontSize: "14px" }}>Total CO₂ saved</p>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+          <p style={{ margin: "8px 0 0", fontSize: "56px", fontWeight: "900", letterSpacing: "-1px" }}>2.3 kg</p>
+          <p style={{ margin: 0, color: theme.textMuted, fontSize: "16px" }}>This week</p>
+        </div>
+      </div>
+
+      <h2 style={{ fontSize: "26px", fontWeight: "700", margin: "18px 0 12px" }}>That's equivalent to...</h2>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
+        {equivalents.map((e) => (
+          <div key={e.title} style={{ ...styles.card, marginBottom: 0 }}>
+            <p style={{ margin: 0, color: theme.textMuted, fontSize: "14px" }}>{e.title}</p>
+            <p style={{ margin: "10px 0 2px", fontSize: "34px", fontWeight: "900", letterSpacing: "-0.5px" }}>{e.value}</p>
+            <p style={{ margin: 0, color: theme.textMuted, fontSize: "14px" }}>{e.sub}</p>
+          </div>
+        ))}
+      </div>
+
+      <h2 style={{ fontSize: "26px", fontWeight: "700", margin: "18px 0 12px" }}>Breakdown by habit</h2>
+      {breakdown.map((b) => (
+        <div key={b.title} style={{ ...styles.card, display: "flex", alignItems: "center", gap: "14px" }}>
+          <div style={{ width: 54, height: 54, borderRadius: "50%", background: theme.greenLight, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "26px", flexShrink: 0 }}>
+            {b.icon}
+          </div>
+          <div style={{ flex: 1 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+              <div>
+                <p style={{ margin: 0, fontWeight: "900", fontSize: "18px" }}>{b.title}</p>
+                <p style={{ margin: "2px 0 10px", color: theme.textMuted, fontSize: "13px" }}>{b.sub}</p>
+              </div>
+              <p style={{ margin: 0, fontWeight: "900", fontSize: "26px", color: b.color }}>{b.kg.toFixed(1)} kg</p>
+            </div>
+            <ProgressBar value={b.kg} max={maxKg} color={b.color} />
+            <p style={{ margin: "8px 0 0", color: theme.textMuted, fontSize: "12px" }}>{Math.round((b.kg / 2.3) * 100)}% of total impact</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function Profile({ onOpenAchievements, onOpenCommunity, onOpenMonthReview }) {
   return (
     <div style={styles.screen}>
       <h2 style={{ textAlign: "center", fontSize: "22px", fontWeight: "700", marginBottom: "20px" }}>Profile</h2>
@@ -376,8 +740,9 @@ function Profile() {
           <p style={{ color: theme.textMuted, margin: 0, fontSize: "13px" }}>🎓 Copenhagen University</p>
         </div>
       </div>
-      <h3 style={{ margin: "20px 0 12px" }}>Your impact</h3>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", marginBottom: "20px" }}>
+
+      <h3 style={{ margin: "18px 0 12px" }}>Your impact</h3>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", marginBottom: "14px" }}>
         {[["Total CO₂ saved", "18.4 kg"], ["Days logged", "23"], ["Longest streak", "7 days"], ["Eco points", "247"]].map(([label, val]) => (
           <div key={label} style={{ ...styles.card, margin: 0 }}>
             <p style={{ color: theme.textMuted, fontSize: "12px", margin: "0 0 6px" }}>{label}</p>
@@ -385,7 +750,13 @@ function Profile() {
           </div>
         ))}
       </div>
-      <h3 style={{ margin: "0 0 12px" }}>Preferences</h3>
+
+      <h3 style={{ margin: "0 0 12px" }}>More</h3>
+      <PressRow icon="🏅" title="Achievements" subtitle="Unlocked badges and eco points" onClick={onOpenAchievements} />
+      <PressRow icon="👥" title="Community" subtitle="Campus leaderboard and challenges" onClick={onOpenCommunity} />
+      <PressRow icon="🗓️" title="Monthly review" subtitle="Your March highlights" onClick={onOpenMonthReview} />
+
+      <h3 style={{ margin: "8px 0 12px" }}>Preferences</h3>
       {[["Daily reminders", "Get notified at 6:00 PM"], ["Weekly reports", "Every Monday morning"]].map(([title, sub]) => (
         <div key={title} style={{ ...styles.card, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <div>
@@ -411,68 +782,111 @@ const NAV = [
   { id: "profile", icon: "👤", label: "Profile" },
 ];
 
-export default function App() {
-  const [page, setPage] = useState("splash");
-  const [nav, setNav] = useState("home");
-
-  if (page === "splash") return (
-    <div style={styles.app}>
-      <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-      <div style={styles.phone}>
-        {/* Status bar removed */}
-        <Splash onStart={() => setPage("setup")} />
-      </div>
-    </div>
-  );
-
-  if (page === "setup") return (
-    <div style={styles.app}>
-      <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-      <div style={styles.phone}>
-        {/* Status bar removed */}
-        <Setup onDone={() => setPage("main")} />
-      </div>
-    </div>
-  );
-
-  if (page === "log") return (
-    <div style={styles.app}>
-      <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-      <div style={styles.phone}>
-        {/* Status bar removed */}
-        <LogToday onSave={() => setPage("saved")} />
-      </div>
-    </div>
-  );
-
-  if (page === "saved") return (
-    <div style={styles.app}>
-      <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-      <div style={styles.phone}>
-        {/* Status bar removed */}
-        <Saved onBack={() => setPage("main")} />
-      </div>
-    </div>
-  );
-
-  // Main with nav
-  const screens = { home: <Home onLog={() => setPage("log")} />, insights: <Insights />, tips: <Tips />, profile: <Profile /> };
-
+function PhoneShell({ children }) {
   return (
     <div style={styles.app}>
       <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
       <div style={styles.phone}>
         {/* Status bar removed */}
-        {screens[nav]}
-        <div style={styles.navBar}>
-          {NAV.map(({ id, icon, label }) => (
-            <div key={id} style={styles.navItem(nav === id)} onClick={() => setNav(id)}>
-              <span style={{ fontSize: "20px" }}>{icon}</span>
-              <span>{label}</span>
-            </div>
-          ))}
-        </div>
+        {children}
       </div>
     </div>
+  );
+}
+
+export default function App() {
+  const [page, setPage] = useState("splash");
+  const [nav, setNav] = useState("home");
+
+  if (page === "splash") {
+    return (
+      <PhoneShell>
+        <Splash onStart={() => setPage("setup")} />
+      </PhoneShell>
+    );
+  }
+
+  if (page === "setup") {
+    return (
+      <PhoneShell>
+        <Setup onDone={() => setPage("main")} />
+      </PhoneShell>
+    );
+  }
+
+  if (page === "log") {
+    return (
+      <PhoneShell>
+        <LogToday onSave={() => setPage("saved")} />
+      </PhoneShell>
+    );
+  }
+
+  if (page === "saved") {
+    return (
+      <PhoneShell>
+        <Saved onBack={() => setPage("main")} />
+      </PhoneShell>
+    );
+  }
+
+  if (page === "achievements") {
+    return (
+      <PhoneShell>
+        <Achievements onBack={() => setPage("main")} />
+      </PhoneShell>
+    );
+  }
+
+  if (page === "community") {
+    return (
+      <PhoneShell>
+        <Community onBack={() => setPage("main")} />
+      </PhoneShell>
+    );
+  }
+
+  if (page === "monthReview") {
+    return (
+      <PhoneShell>
+        <MonthReview onBack={() => setPage("main")} />
+      </PhoneShell>
+    );
+  }
+
+  if (page === "impactDetails") {
+    return (
+      <PhoneShell>
+        <ImpactDetails onBack={() => setPage("main")} />
+      </PhoneShell>
+    );
+  }
+
+  // Main with nav
+  const screens = {
+    home: <Home onLog={() => setPage("log")} onImpactDetails={() => setPage("impactDetails")} />,
+    insights: <Insights />,
+    tips: <Tips />,
+    profile: (
+      <Profile
+        onOpenAchievements={() => setPage("achievements")}
+        onOpenCommunity={() => setPage("community")}
+        onOpenMonthReview={() => setPage("monthReview")}
+      />
+    ),
+  };
+
+  return (
+    <PhoneShell>
+      {screens[nav]}
+      <div style={styles.navBar}>
+        {NAV.map(({ id, icon, label }) => (
+          <div key={id} style={styles.navItem(nav === id)} onClick={() => setNav(id)}>
+            <span style={{ fontSize: "20px" }}>{icon}</span>
+            <span>{label}</span>
+          </div>
+        ))}
+      </div>
+    </PhoneShell>
   );
 }
