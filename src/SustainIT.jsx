@@ -479,20 +479,20 @@ function Achievements({ onBack }) {
     <div style={{ ...styles.screen, paddingBottom: "24px" }}>
       <TopBar title="Achievements" onBack={onBack} />
 
-      <div style={{ ...styles.card, textAlign: "center", padding: "18px 16px" }}>
+      <div style={{ ...styles.card, textAlign: "center", padding: "18px 16px", color: theme.text }}>
         <p style={{ color: theme.textMuted, margin: "0 0 6px", fontSize: "14px" }}>Your eco points</p>
-        <p style={{ fontSize: "52px", fontWeight: "800", margin: "0 0 4px", letterSpacing: "-1px" }}>247</p>
+        <p style={{ fontSize: "52px", fontWeight: "800", margin: "0 0 4px", letterSpacing: "-1px", color: theme.text }}>247</p>
         <p style={{ color: theme.textMuted, margin: 0, fontSize: "14px" }}>Level 3 Eco Warrior</p>
       </div>
 
       <h2 style={{ fontSize: "26px", fontWeight: "700", margin: "18px 0 12px" }}>Unlocked</h2>
       {unlocked.map((a) => (
-        <div key={a.title} style={{ ...styles.card, display: "flex", alignItems: "center", gap: "14px" }}>
+        <div key={a.title} style={{ ...styles.card, display: "flex", alignItems: "center", gap: "14px", color: theme.text }}>
           <div style={{ width: 54, height: 54, borderRadius: "50%", background: "#f5f2ea", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "26px", flexShrink: 0 }}>
-            <span style={{ transform: "translateY(1px)" }}>{a.icon}</span>
+            <span style={{ transform: "translateY(1px)", color: theme.text }}>{a.icon}</span>
           </div>
           <div style={{ flex: 1 }}>
-            <p style={{ margin: 0, fontWeight: "700", fontSize: "18px" }}>{a.title}</p>
+            <p style={{ margin: 0, fontWeight: "700", fontSize: "18px", color: theme.text }}>{a.title}</p>
             <p style={{ margin: "2px 0 0", color: theme.textMuted, fontSize: "13px" }}>{a.sub}</p>
           </div>
           <div style={{ color: theme.textMuted, fontWeight: "600", fontSize: "14px" }}>{a.pts}</div>
@@ -502,11 +502,11 @@ function Achievements({ onBack }) {
       <h2 style={{ fontSize: "26px", fontWeight: "700", margin: "18px 0 12px" }}>Coming soon</h2>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
         {comingSoon.map((c) => (
-          <div key={c.title} style={{ ...styles.card, marginBottom: 0, opacity: 0.9 }}>
-            <div style={{ width: 52, height: 52, borderRadius: "16px", background: theme.surface2, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "26px", marginBottom: "10px" }}>
+          <div key={c.title} style={{ ...styles.card, marginBottom: 0, opacity: 0.9, color: theme.text }}>
+            <div style={{ width: 52, height: 52, borderRadius: "16px", background: theme.surface2, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "26px", marginBottom: "10px", color: theme.text }}>
               {c.icon}
             </div>
-            <p style={{ margin: 0, fontWeight: "700", fontSize: "16px" }}>{c.title}</p>
+            <p style={{ margin: 0, fontWeight: "700", fontSize: "16px", color: theme.text }}>{c.title}</p>
             <p style={{ margin: "4px 0 0", color: theme.textMuted, fontSize: "13px" }}>{c.sub}</p>
           </div>
         ))}
@@ -736,8 +736,8 @@ function Profile({ onOpenAchievements, onOpenCommunity, onOpenMonthReview }) {
         <div style={{ width: 52, height: 52, borderRadius: "50%", background: theme.green, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: "700", fontSize: "16px" }}>AS</div>
         <div>
           <p style={{ fontWeight: "700", margin: "0 0 2px", fontSize: "17px" }}>Alex Smith</p>
-          <p style={{ color: theme.textMuted, margin: "0 0 2px", fontSize: "13px" }}>Environmental Science</p>
-          <p style={{ color: theme.textMuted, margin: 0, fontSize: "13px" }}>🎓 Copenhagen University</p>
+          <p style={{ color: theme.textMuted, margin: "0 0 2px", fontSize: "13px" }}>Climate and Supply Engineering</p>
+          <p style={{ color: theme.textMuted, margin: 0, fontSize: "13px" }}>🎓 VIA University College</p>
         </div>
       </div>
 
