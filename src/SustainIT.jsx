@@ -479,35 +479,35 @@ function Achievements({ onBack }) {
     <div style={{ ...styles.screen, paddingBottom: "24px" }}>
       <TopBar title="Achievements" onBack={onBack} />
 
-      <div style={{ ...styles.card, textAlign: "center", padding: "18px 16px", color: theme.text }}>
-        <p style={{ color: theme.textMuted, margin: "0 0 6px", fontSize: "14px" }}>Your eco points</p>
-        <p style={{ fontSize: "52px", fontWeight: "800", margin: "0 0 4px", letterSpacing: "-1px", color: theme.text }}>247</p>
-        <p style={{ color: theme.textMuted, margin: 0, fontSize: "14px" }}>Level 3 Eco Warrior</p>
+      <div style={{ ...styles.card, textAlign: "center", padding: "18px 16px", color: "#fff" }}>
+        <p style={{ color: "#fff", margin: "0 0 6px", fontSize: "14px" }}>Your eco points</p>
+        <p style={{ fontSize: "52px", fontWeight: "800", margin: "0 0 4px", letterSpacing: "-1px", color: "#fff" }}>247</p>
+        <p style={{ color: "#fff", margin: 0, fontSize: "14px" }}>Level 3 Eco Warrior</p>
       </div>
 
       <h2 style={{ fontSize: "26px", fontWeight: "700", margin: "18px 0 12px" }}>Unlocked</h2>
       {unlocked.map((a) => (
-        <div key={a.title} style={{ ...styles.card, display: "flex", alignItems: "center", gap: "14px", color: theme.text }}>
+        <div key={a.title} style={{ ...styles.card, display: "flex", alignItems: "center", gap: "14px", color: "#fff" }}>
           <div style={{ width: 54, height: 54, borderRadius: "50%", background: "#f5f2ea", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "26px", flexShrink: 0 }}>
-            <span style={{ transform: "translateY(1px)", color: theme.text }}>{a.icon}</span>
+            <span style={{ transform: "translateY(1px)", color: "#fff" }}>{a.icon}</span>
           </div>
           <div style={{ flex: 1 }}>
-            <p style={{ margin: 0, fontWeight: "700", fontSize: "18px", color: theme.text }}>{a.title}</p>
-            <p style={{ margin: "2px 0 0", color: theme.textMuted, fontSize: "13px" }}>{a.sub}</p>
+            <p style={{ margin: 0, fontWeight: "700", fontSize: "18px", color: "#fff" }}>{a.title}</p>
+            <p style={{ margin: "2px 0 0", color: "#fff", fontSize: "13px" }}>{a.sub}</p>
           </div>
-          <div style={{ color: theme.textMuted, fontWeight: "600", fontSize: "14px" }}>{a.pts}</div>
+          <div style={{ color: "#fff", fontWeight: "600", fontSize: "14px" }}>{a.pts}</div>
         </div>
       ))}
 
       <h2 style={{ fontSize: "26px", fontWeight: "700", margin: "18px 0 12px" }}>Coming soon</h2>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
         {comingSoon.map((c) => (
-          <div key={c.title} style={{ ...styles.card, marginBottom: 0, opacity: 0.9, color: theme.text }}>
-            <div style={{ width: 52, height: 52, borderRadius: "16px", background: theme.surface2, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "26px", marginBottom: "10px", color: theme.text }}>
+          <div key={c.title} style={{ ...styles.card, marginBottom: 0, opacity: 0.9, color: "#fff" }}>
+            <div style={{ width: 52, height: 52, borderRadius: "16px", background: theme.surface2, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "26px", marginBottom: "10px", color: "#fff" }}>
               {c.icon}
             </div>
-            <p style={{ margin: 0, fontWeight: "700", fontSize: "16px", color: theme.text }}>{c.title}</p>
-            <p style={{ margin: "4px 0 0", color: theme.textMuted, fontSize: "13px" }}>{c.sub}</p>
+            <p style={{ margin: 0, fontWeight: "700", fontSize: "16px", color: "#fff" }}>{c.title}</p>
+            <p style={{ margin: "4px 0 0", color: "#fff", fontSize: "13px" }}>{c.sub}</p>
           </div>
         ))}
       </div>
@@ -556,8 +556,8 @@ function Community({ onBack }) {
               {initials}
             </div>
             <div style={{ flex: 1 }}>
-              <p style={{ margin: 0, fontWeight: "700", fontSize: "18px" }}>{l.name}</p>
-              <p style={{ margin: "2px 0 0", color: theme.textMuted, fontSize: "13px" }}>{l.dept}</p>
+              <p style={{ margin: 0, fontWeight: "700", fontSize: "18px", color: "#fff" }}>{l.name}</p>
+              <p style={{ margin: "2px 0 0", color: "#fff", fontSize: "13px" }}>{l.dept}</p>
             </div>
             <div style={{ fontWeight: "700", fontSize: "18px" }}>{l.kg}</div>
           </div>
@@ -605,9 +605,9 @@ function MonthReview({ onBack }) {
       <TopBar title="March Review" onBack={onBack} actionLabel="Share" onAction={() => {}} />
 
       <div style={{ ...styles.card, background: theme.greenLight, color: "#183125", padding: "18px 16px" }}>
-        <p style={{ margin: 0, fontWeight: "700", opacity: 0.8 }}>Incredible month!</p>
+        <p style={{ margin: 0, fontWeight: "700", color: "#fff" }}>Incredible month!</p>
         <p style={{ margin: "10px 0 6px", fontSize: "56px", fontWeight: "900", letterSpacing: "-1px", color: theme.green }}>12.8 kg</p>
-        <p style={{ margin: 0, opacity: 0.8, fontSize: "16px" }}>CO₂ saved in March</p>
+        <p style={{ margin: 0, color: "#fff", fontSize: "16px" }}>CO₂ saved in March</p>
       </div>
 
       <h2 style={{ fontSize: "26px", fontWeight: "700", margin: "18px 0 12px" }}>Your activity</h2>
@@ -745,8 +745,8 @@ function Profile({ onOpenAchievements, onOpenCommunity, onOpenMonthReview }) {
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", marginBottom: "14px" }}>
         {[["Total CO₂ saved", "18.4 kg"], ["Days logged", "23"], ["Longest streak", "7 days"], ["Eco points", "247"]].map(([label, val]) => (
           <div key={label} style={{ ...styles.card, margin: 0 }}>
-            <p style={{ color: theme.textMuted, fontSize: "12px", margin: "0 0 6px" }}>{label}</p>
-            <p style={{ fontWeight: "700", fontSize: "22px", margin: 0 }}>{val}</p>
+            <p style={{ color: "#fff", fontSize: "12px", margin: "0 0 6px" }}>{label}</p>
+            <p style={{ fontWeight: "700", fontSize: "22px", margin: 0, color: "#fff" }}>{val}</p>
           </div>
         ))}
       </div>
@@ -761,7 +761,7 @@ function Profile({ onOpenAchievements, onOpenCommunity, onOpenMonthReview }) {
         <div key={title} style={{ ...styles.card, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <div>
             <p style={{ margin: "0 0 2px", fontWeight: "500" }}>{title}</p>
-            <p style={{ color: theme.textMuted, margin: 0, fontSize: "12px" }}>{sub}</p>
+            <p style={{ color: "#fff", margin: 0, fontSize: "12px" }}>{sub}</p>
           </div>
           <div style={{ width: 48, height: 26, borderRadius: "13px", background: theme.green, position: "relative" }}>
             <div style={{ position: "absolute", right: "3px", top: "3px", width: 20, height: 20, borderRadius: "50%", background: "#fff" }} />
